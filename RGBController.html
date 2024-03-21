@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://kit.fontawesome.com/d7b3791779.js" crossorigin="anonymous"></script>
+
+
+
+  <script>
+    function changecolor(r,g,b){
+      sendRGB(r, g, b);
+    }
+    
+    function sendRGB(r, g, b) {
+      const url = `http://192.168.10.246:2001/setrgb?r=${r}&g=${g}&b=${b}`;
+      fetch(url)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.text();
+        })
+        .then(data => {
+          console.log('RGB values sent successfully:', data);
+        })
+    }
+  </script>
+    
+  <title>RGB Remote</title>
+  <style>
+    .flash{
+      width: 200px;
+      height: 200px;
+      background: linear-gradient(45deg, DodgerBlue, DodgerBlue 100%), linear-gradient(135deg, lime, lime), linear-gradient(225deg, white, white) , linear-gradient(225deg, red, red);
+      background-size: 50% 50%;
+      background-position: 0% 0%, 0% 100%, 100% 0%, 100% 100%;
+      background-repeat: no-repeat;
+    }
+    .btn-circle {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-left: 5px;
+        margin-right: 5px;
+        font-weight: bold;
+    }
+
+    .row {
+        margin-bottom: 0.5rem; 
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+
+    .container {
+        width: 250px;
+        margin-left: 10px;
+        padding: 0px;
+        padding-top: 10px;
+        padding-bottom: 1px;
+        border-radius: 5%;
+        background-color: grey;
+    }
+
+    .fixcol-md-3 {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    body{
+        background-color: #fbf7e9 ;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="container mt-4">
+  <div class="row flex-nowrap">
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center ">
+      <button onclick="changecolor('more',0,0)" type="button" class="btn-circle"><i class="fa fa-sun-o" aria-hidden="true" style="font-size:25px;"></i>+</button>
+    </div>
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center">
+      <button onclick="changecolor('less',0,0)" type="button" class="btn-circle"><i class="fa fa-sun-o" aria-hidden="true" style="font-size:25px;"></i>-</button>
+    </div>
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center">
+      <button onclick="changecolor('off',0,0)" type="button" class="btn-circle" style="background-color: black; color: white;">OFF</button>
+    </div>
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center">
+      <button onclick="changecolor('on',0,0)" type="button" class="btn-circle" style="background-color: red; color: white;">ON</button>
+    </div>
+  </div>
+  <div class="row flex-nowrap">
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center">
+      <button onclick="changecolor(255,0,0)" type="button" class="btn-circle" style="background-color: red;">R</button>
+    </div>
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center">
+      <button onclick="changecolor(0,255,0)" type="button" class="btn-circle" style="background-color: green;">G</button>
+    </div>
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center">
+      <button onclick="changecolor(0,0,255)" type="button" class="btn-circle" style="background-color: blue;">B</button>
+    </div>
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center">
+      <button onclick="changecolor(255,255,255)" type="button" class="btn-circle" style="background-color: white;">W</button>
+    </div>
+  </div>
+  <div class="row flex-nowrap">
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center">
+      <button onclick="changecolor(255,99,71)" type="button" class="btn-circle" style="background-color: tomato;"></button>
+    </div>
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center">
+      <button onclick="changecolor(34,139,34)" type="button" class="btn-circle" style="background-color: forestgreen;"></button>
+    </div>
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center">
+      <button onclick="changecolor(127,255,212)" type="button" class="btn-circle" style="background-color: aquamarine"></button>
+    </div>
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center">
+      <button onclick="changecolor('fire')" type="button" class="btn-circle" style="background-color: #202020; font-size: xx-large; color: orangered"><i class="fa fa-fire" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+  <div class="row flex-nowrap">
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center">
+      <button onclick="changecolor(255, 165, 0)" type="button" class="btn-circle" style="background-color: orange;"></button>
+    </div>
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center">
+      <button onclick="changecolor(173,255,47)" type="button" class="btn-circle" style="background-color: greenyellow;"></button>
+    </div>
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center">
+      <button onclick="changecolor(148,0,211)" type="button" class="btn-circle" style="background-color: darkviolet;"></button>
+    </div>
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center">
+      <button onclick="changecolor('flash')" type="button" class="btn-circle flash" style="background-color: black;"></button>
+    </div>
+  </div>
+  <div class="row flex-nowrap">
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center">
+      <button onclick="changecolor(255,255,0)" type="button" class="btn-circle" style="background-color: yellow;"></button>
+    </div>
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center">
+      <button onclick="changecolor(0,139,139)" type="button" class="btn-circle" style="background-color: darkcyan;"></button>
+    </div>
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center">
+      <button onclick="changecolor(255,20,147)" type="button" class="btn-circle" style="background-color: deeppink;"></button>
+    </div>
+    <div class="col-md-3 fixcol-md-3 d-flex justify-content-center" >
+      <button onclick="console.log('Nothing done')" type="button" class="btn-circle" style="background-color: black;"></button>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
