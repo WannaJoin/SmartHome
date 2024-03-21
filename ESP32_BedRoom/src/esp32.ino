@@ -3,7 +3,9 @@
 
 
 #define DHTPIN 4
-#define DHTTYPE DHT11
+//Wokwi uses DHT22 but at home I use DHT11
+//#define DHTTYPE DHT11
+#define DHTTYPE DHT22
 
 #define CLKT  26
 #define DIOT  27
@@ -34,7 +36,6 @@ void loop() {
 
   Serial.print(F("Humidity: "));
   Serial.print(h);
-  Serial.print(t);
   Serial.println(F("% "));
   Serial.print(F("Heat index: "));
   Serial.print(hic);
