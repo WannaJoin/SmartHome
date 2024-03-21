@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "author": "WannaJoin",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-breadboard-half", "id": "bb1", "top": -195, "left": -352.4, "attrs": {} },
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": -441.6,
+      "left": -513.56,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-dht22",
+      "id": "dht1",
+      "top": -326.1,
+      "left": -207,
+      "attrs": { "temperature": "12", "humidity": "78" }
+    },
+    {
+      "type": "wokwi-tm1637-7segment",
+      "id": "sevseg2",
+      "top": -144.04,
+      "left": -578.57,
+      "attrs": { "color": "red" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": -131,
+      "left": -173.65,
+      "rotate": 270,
+      "attrs": { "value": "1000" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "sevseg2:CLK", "esp:26", "green", [ "h86.4", "v57.6" ] ],
+    [ "sevseg2:DIO", "esp:27", "green", [ "h0" ] ],
+    [ "esp:3V3", "bb1:tp.1", "green", [ "h0" ] ],
+    [ "esp:GND.2", "bb1:tn.11", "black", [ "v0" ] ],
+    [ "esp:5V", "bb1:bp.1", "red", [ "h0" ] ],
+    [ "esp:GND.2", "bb1:bn.11", "black", [ "v0" ] ],
+    [ "r1:2", "bb1:tp.16", "green", [ "h0" ] ],
+    [ "r1:1", "bb1:16t.e", "green", [ "h0" ] ],
+    [ "dht1:SDA", "bb1:16t.a", "green", [ "v0" ] ],
+    [ "bb1:16t.c", "esp:4", "green", [ "v0" ] ],
+    [ "dht1:VCC", "bb1:tp.12", "red", [ "v0" ] ],
+    [ "dht1:GND", "bb1:tn.15", "black", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
