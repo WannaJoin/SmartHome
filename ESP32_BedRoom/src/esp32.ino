@@ -10,8 +10,14 @@
 #define CLKT  26
 #define DIOT  27
 
+#define CLKH  14
+#define DIOH  12
+
 TM1637Display displayT = TM1637Display(CLKT, DIOT);
+TM1637Display displayH = TM1637Display(CLKH, DIOH);
+
 DHT dht(DHTPIN, DHTTYPE);
+
 
 void setup() {
   Serial.begin(115200);
@@ -19,7 +25,9 @@ void setup() {
   dht.begin();
 
   displayT.clear();
+  displayH.clear();
   displayT.setBrightness(7);
+  displayH.setBrightness(7);
 }
 
 void loop() {
@@ -43,4 +51,5 @@ void loop() {
   Serial.println("");
 
   displayT.showNumberDecEx((int)(hic * 100), 0b00100000, false, 4, 0);
+  displayH.showNumberDecEx((int)(h * 100), 0b00100000, false, 4, 0);
 }
