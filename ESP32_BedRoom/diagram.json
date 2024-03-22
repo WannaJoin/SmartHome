@@ -52,10 +52,10 @@
     [ "dht1:GND", "esp:GND.2", "black", [ "v0" ] ],
     [ "sevseg1:CLK", "esp:14", "green", [ "h57.6", "v-86.4" ] ],
     [ "sevseg1:DIO", "esp:12", "green", [ "h67.2", "v-86.4" ] ],
-    [ "sevseg1:VCC", "sevseg2:VCC", "red", [ "h0" ] ],
-    [ "sevseg2:GND", "sevseg1:GND", "black", [ "h0" ] ],
     [ "sevseg2:VCC", "esp:3V3", "red", [ "h48", "v-105.6" ] ],
-    [ "sevseg1:GND", "esp:GND.2", "black", [ "h211.2", "v-220.8" ] ]
+    [ "sevseg1:GND", "esp:GND.2", "black", [ "h211.2", "v-220.8" ] ],
+    [ "sevseg2:VCC", "sevseg1:VCC", "red", [ "h0" ] ],
+    [ "sevseg2:GND", "sevseg1:VCC", "black", [ "h0" ] ]
   ],
   "dependencies": {}
 }

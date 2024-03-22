@@ -15,8 +15,6 @@ String bRgbArr[] = {"0","0","0"};
 String payload = "";
 HTTPClient http;
 
-
-
 void setup() {
   pinMode(RED_PIN, OUTPUT);
   pinMode(GREEN_PIN, OUTPUT);
