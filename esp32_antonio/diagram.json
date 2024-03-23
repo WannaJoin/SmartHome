@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "author": "WannaJoin",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": -441.6,
+      "left": -513.56,
+      "attrs": {}
+    },
+    { "type": "wokwi-relay-module", "id": "relay1", "top": -556.6, "left": -499.2, "attrs": {} },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -589.2,
+      "left": -245.8,
+      "attrs": { "color": "red" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": -473.8,
+      "left": -364.8,
+      "attrs": { "color": "green" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "relay1:VCC", "esp:5V", "red", [ "h-28.8", "v297.6" ] ],
+    [ "relay1:GND", "esp:GND.2", "black", [ "h-48", "v105.2", "h134.4" ] ],
+    [ "relay1:IN", "esp:25", "green", [ "h-38.4", "v182.2" ] ],
+    [ "led1:C", "esp:GND.2", "green", [ "v0" ] ],
+    [ "relay1:COM", "esp:3V3", "green", [ "v46.6", "h-123.75" ] ],
+    [ "led1:A", "relay1:NO", "green", [ "v0" ] ],
+    [ "esp:3V3", "btn1:2.l", "green", [ "h0" ] ],
+    [ "btn1:1.r", "led1:A", "green", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
