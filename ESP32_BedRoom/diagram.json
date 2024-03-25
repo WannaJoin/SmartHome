@@ -27,7 +27,7 @@
     {
       "type": "wokwi-resistor",
       "id": "r1",
-      "top": -457.4,
+      "top": -467,
       "left": -557.65,
       "rotate": 270,
       "attrs": { "value": "1000" }

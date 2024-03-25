@@ -4,25 +4,21 @@
 #include <ArduinoJson.h>
 #include <HTTPClient.h>
 
-
 //Wokwi uses DHT22 but at home I use DHT11
 #define DHTTYPE DHT22
 
 //Define all the ESP32 pins
 #define DHTPIN 4
-
 #define CLKT  26
 #define DIOT  27
 #define CLKH  14
 #define DIOH  12
-
 #define RED_PIN   22  
 #define GREEN_PIN 22
 #define BLUE_PIN  22
 #define NUM_PIXELS 60
 
 HTTPClient http;
-
 DHT dht(DHTPIN, DHTTYPE);
 TM1637Display displayT = TM1637Display(CLKT, DIOT);
 TM1637Display displayH = TM1637Display(CLKH, DIOH);
@@ -36,9 +32,9 @@ String rgbArr[] = {"0","0","0"};
 String bRgbArr[] = {"0","0","0"};
 String payload = "";
 
-
 void setup() {
   Serial.begin(115200);
+  Serial.println("SETUP START.");
 
   dht.begin();
 
@@ -63,11 +59,12 @@ void setup() {
   Serial.println(WiFi.localIP());
   Serial.println("Connected to WiFi");
 
-  xTaskCreatePinnedToCore(httpServerRequest, "HTTP Request Task", 10000, NULL, 1, NULL, 0);
+  xTaskCreate(httpServerRequest, "HTTP Request Task", 2048, NULL, 1, NULL);
+  xTaskCreate(thSensorHandler, "HTTP Request Task", 2048, NULL, 1, NULL);
+  Serial.println("SETUP END.");
 }
 
-void loop() {
-  THSensorHandler();
+void loop() {  
   if (rgbArr[0] == "fire"){
     fireEffect();
   } else if (rgbArr[0] == "flash"){
@@ -81,32 +78,32 @@ void loop() {
   }
 
   saveBackArr();
-
   delay(50);
 }
 
-
-void THSensorHandler(){
-  h = dht.readHumidity();
-  t = dht.readTemperature();
+void thSensorHandler(void * parameter){
+  for (;;){
+    h = dht.readHumidity();
+    t = dht.readTemperature();
   
-  if (isnan(h) || isnan(t)) {
-    Serial.println(F("Failed to read from DHT sensor!"));
-    return;
+    if (isnan(h) || isnan(t)) {
+      Serial.println(F("Failed to read from DHT sensor!"));
+    } else {
+      hic = dht.computeHeatIndex(t, h, false);
+
+      Serial.print(F("Humidity: "));
+      Serial.print(h);
+      Serial.println(F("% "));
+      Serial.print(F("Heat index: "));
+      Serial.print(hic);
+      Serial.println(F("°C "));
+      Serial.println("");
+
+      displayT.showNumberDecEx((int)(hic * 100), 0b00100000, false, 4, 0);
+      displayH.showNumberDecEx((int)(h * 100), 0b00100000, false, 4, 0);
+    }
+    vTaskDelay(pdMS_TO_TICKS(50000));
   }
-
-  hic = dht.computeHeatIndex(t, h, false);
-
-  Serial.print(F("Humidity: "));
-  Serial.print(h);
-  Serial.println(F("% "));
-  Serial.print(F("Heat index: "));
-  Serial.print(hic);
-  Serial.println(F("°C "));
-  Serial.println("");
-
-  displayT.showNumberDecEx((int)(hic * 100), 0b00100000, false, 4, 0);
-  displayH.showNumberDecEx((int)(h * 100), 0b00100000, false, 4, 0);
 }
 
 void saveBackArr(){
