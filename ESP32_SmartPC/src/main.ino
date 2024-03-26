@@ -2,7 +2,6 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 
-
 #define TIPPIN 12
 #define BUZZPIN 26
 
@@ -86,9 +85,9 @@ const char * htmlCode = R"(
   </html>
 )";
 
+
 void setup() {
   pinMode(TIPPIN, OUTPUT);
-  
   Serial.begin(115200);
 
   Serial.print("Connecting to ");
@@ -158,8 +157,10 @@ void setup() {
 
 
   server.begin();
+
 }
 
 void loop() {
-
+  
 }
+
