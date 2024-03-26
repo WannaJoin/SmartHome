@@ -28,13 +28,15 @@ float t, h, hic = 0;
 const char* ssid = "Convidados";
 const char* password = "";
 
+String httpServerIP = "http://192.168.10.246:3001/reqrgb";
+
 String rgbArr[] = {"0","0","0"};
 String bRgbArr[] = {"0","0","0"};
 String payload = "";
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("SETUP START.");
+  Serial.println("\n\nInitializing ESP32");
 
   dht.begin();
 
@@ -50,18 +52,17 @@ void setup() {
   Serial.begin(115200);
 
   WiFi.begin(ssid, password);
+  Serial.print("Connecting to WiFi...");
   while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    Serial.println("Connecting to WiFi...");
+    Serial.print(".");
+    delay(300); 
   }
-  Serial.println("Connected to WiFi");
-  Serial.print("IP Address: ");
+  Serial.println("\nConnected");
+  Serial.print("\nIP Address: ");
   Serial.println(WiFi.localIP());
-  Serial.println("Connected to WiFi");
 
   xTaskCreate(httpServerRequest, "HTTP Request Task", 2048, NULL, 1, NULL);
-  xTaskCreate(thSensorHandler, "HTTP Request Task", 2048, NULL, 1, NULL);
-  Serial.println("SETUP END.");
+  xTaskCreate(thSensorHandler, "thSensor task", 2048, NULL, 1, NULL);
 }
 
 void loop() {  
@@ -130,7 +131,7 @@ void offHandler(){
 
 void httpServerRequest (void * parameter){
   for (;;) {
-    http.begin("http://192.168.10.246:3001/reqrgb");
+    http.begin(httpServerIP);
     int httpCode = http.GET();
 
     if (httpCode == HTTP_CODE_OK) {
