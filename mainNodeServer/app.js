@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require('http');
 const path = require('path');
+const bodyParser = require('body-parser');
 
 const app = express();
 const webapp = express();
@@ -24,6 +25,20 @@ let bR = 0;
 let bG = 0;
 let bB = 0;
 
+const wTempSv = express();
+let wTempVal = 0;
+
+wTempSv.use(bodyParser.urlencoded({ extended: true }));
+
+wTempSv.post('/setWaterVal', (req, res) => {
+  wTempVal = parseFloat(req.body.value);
+  console.log('Received float value:', wTempVal);
+  res.sendStatus(200);
+});
+
+wTempSv.listen(6161, () => {
+  console.log(`wTempSv running on 6161.`);
+});
 
 app.get('/setRGB', (req, res) => {
   let { r, g, b } = req.query;
