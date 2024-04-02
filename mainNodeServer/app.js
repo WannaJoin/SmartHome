@@ -127,7 +127,7 @@ espserver.listen(3001, () => {
 webapp.set('view engine', 'ejs');
 webapp.set('views', path.join(__dirname, 'views'));
 webapp.get('/', (req, res) => {
-    res.render('index', { message: 'Hello, world!' });
+    res.render('index', { wTempVal: wTempVal });
 });
 
 webapp.listen(80, () => {
