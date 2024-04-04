@@ -1,13 +1,15 @@
 const WebSocket = require('ws');
 const fs = require("fs");
 
-const wss = new WebSocket.Server({ port: 8080 });
+const espJacIP = "192.168.10.131"
 
 let jWaterTemp = [];
 loadDataFiles();
 
 
 //        MAIN WEBSOCKET CODE
+
+const wss = new WebSocket.Server({ port: 8080 });
 
 wss.on('listening', () => {
   const address = wss.address();
@@ -16,14 +18,15 @@ wss.on('listening', () => {
 
 wss.on('connection', function connection(ws, req) {
   //Log the IP of the connection for further verification
-  const deviceIp = req.socket.remoteAddress;
+  const deviceIp = extractIPv4(req.socket.remoteAddress);
   console.log(`Client connected from IP: ${deviceIp}`);
 
   ws.on('message', (message) => {    
     // Handle the message received
     let parsedMessage = parseMessage(message);
-
-    saveJWaterTemp(parsedMessage);
+    if (deviceIp === "espJacIP"){
+      saveJWaterTemp(parsedMessage);
+    }
   });
 
 
@@ -72,3 +75,11 @@ function saveJWaterTemp(push){
     }
   });
 };
+
+function extractIPv4(ip) {
+  if (ip.includes('::ffff:')) {
+    return ip.split('::ffff:')[1];
+  } else {
+    return ip;
+  }
+}
