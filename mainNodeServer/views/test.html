@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WebSocket Client</title>
+</head>
+<body>
+
+<input type="text" id="messageInput" placeholder="Type a message...">
+<button onclick="sendMessage()">Send</button>
+
+<script>
+function sendMessage() {
+  const messageInput = document.getElementById('messageInput');
+  const messageValue = messageInput.value;
+  
+  // Get the current date and time
+  const currentDate = new Date().toISOString();
+
+  // Construct the message object
+  const message = JSON.stringify({ date: currentDate, value: messageValue });
+
+  // Create WebSocket connection
+  const socket = new WebSocket('ws://localhost:8080'); // Change to your WebSocket server address
+
+  // Connection opened
+  socket.addEventListener('open', function (event) {
+    console.log('Connected to server');
+    // Send the message object to the server
+    socket.send(message);
+  });
+
+  // Listen for messages
+  socket.addEventListener('message', function (event) {
+    console.log('Message from server:', event.data);
+  });
+
+  // Error handler
+  socket.addEventListener('error', function (event) {
+    console.error('WebSocket error:', event);
+  });
+
+  // Close handler
+  socket.addEventListener('close', function (event) {
+    console.log('Connection closed');
+  });
+
+  // Clear input field after sending message
+  messageInput.value = '';
+}
+</script>
+
+</body>
+</html>
