@@ -1,9 +1,9 @@
 const WebSocket = require('ws');
 const fs = require("fs");
 
-const espJacIP = "192.168.10.131"
+const espAquaIp = "10.8.0.185"
 
-let jWaterTemp = [];
+let waterTemp = [];
 loadDataFiles();
 
 
@@ -24,11 +24,10 @@ wss.on('connection', function connection(ws, req) {
   ws.on('message', (message) => {    
     // Handle the message received
     let parsedMessage = parseMessage(message);
-    if (deviceIp === "espJacIP"){
-      saveJWaterTemp(parsedMessage);
+    if (deviceIp === "espAquaIp"){
+      savewaterTemp(parsedMessage);
     }
   });
-
 
   ws.on('close', function close() {
     console.log('Client disconnected');
@@ -42,9 +41,9 @@ wss.on('connection', function connection(ws, req) {
 
 function loadDataFiles(){
   //Load the temperature list to the global list
-  fs.readFile("data/jWaterTemp.json", (error, data) => {
+  fs.readFile("data/waterTemp.json", (error, data) => {
     if (data != 0){
-      jWaterTemp = JSON.parse(data);
+      waterTemp = JSON.parse(data);
     }
   });
 }
@@ -61,14 +60,14 @@ function parseMessage(message){
   return parsedMessage;
 }
 
-function saveJWaterTemp(push){
+function savewaterTemp(push){
   //Push the value to the current list and log it.
-  jWaterTemp.push(push);
+  waterTemp.push(push);
   // console.log("New updated list: \n");
-  // jWaterTemp.forEach((x) => console.log(x));
+  // waterTemp.forEach((x) => console.log(x));
   // console.log("\n\n");
 
-  fs.writeFile("data/jWaterTemp.json", JSON.stringify(jWaterTemp), (error) => {
+  fs.writeFile("data/waterTemp.json", JSON.stringify(waterTemp), (error) => {
     if (error) {
       console.error(error);
       throw error;
