@@ -1,7 +1,8 @@
 const WebSocket = require('ws');
 const fs = require("fs");
+const express = require('express');
 
-const espAquaIp = "10.8.0.185"
+const espAquarium = "192.168.10.x"
 
 let waterTemp = [];
 loadDataFiles();
@@ -24,7 +25,8 @@ wss.on('connection', function connection(ws, req) {
   ws.on('message', (message) => {    
     // Handle the message received
     let parsedMessage = parseMessage(message);
-    if (deviceIp === "espAquaIp"){
+    if (deviceIp === espAquarium){
+      console.log("Message received: ESP_Aquarium\nMessage: ", parsedMessage, "\n");
       savewaterTemp(parsedMessage);
     }
   });
@@ -63,9 +65,6 @@ function parseMessage(message){
 function savewaterTemp(push){
   //Push the value to the current list and log it.
   waterTemp.push(push);
-  // console.log("New updated list: \n");
-  // waterTemp.forEach((x) => console.log(x));
-  // console.log("\n\n");
 
   fs.writeFile("data/waterTemp.json", JSON.stringify(waterTemp), (error) => {
     if (error) {
@@ -82,3 +81,17 @@ function extractIPv4(ip) {
     return ip;
   }
 }
+
+
+//WebServer
+const webServer = express();
+webServer.set('view engine', 'ejs');
+
+webServer.get('/', (req, res) => {
+    const value = 'Hello from Node.js server!';
+    res.render('index', { wTempVal: 0 });
+});
+
+webServer.listen(80, () => {
+    console.log(`Server is running on http://localhost:80`);
+});

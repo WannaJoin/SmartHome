@@ -3,10 +3,10 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-const char* ssid = "Convidados";
-const char* password = "";
+const char* ssid = "TP-3009";
+const char* password = "x";
 
-const char* wsServer = "192.168.0.1"; 
+const char* wsServer = "192.168.10.x"; 
 const uint16_t wsPort = 8080; 
 
 using namespace websockets;
@@ -23,7 +23,7 @@ void wsConnect(){
   wsConnected = wsClient.connect(wsServer, wsPort, "/");
 
   if(wsConnected) {
-    Serial.println("Connecetd!");
+    Serial.println("Connecetd!n");
   } else {
     Serial.println("Not Connected!");
   }
