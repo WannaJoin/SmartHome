@@ -152,7 +152,7 @@
 </div>
 <br><br><br>
 
-<h1 style="font-family:monospace">Jacuzzi Water Temp:<br><br>&nbsp&nbsp&nbsp<%= wTempVal %></h1>
+<h1 style="font-family:monospace">Jacuzzi Water Temp:<br><br>&nbsp&nbsp&nbsp<%= waterTemp[4] %></h1>
 
 
 <div style="width: 600px; height: 275px;">
@@ -160,8 +160,8 @@
 </div>
 
   <script>
-    const timeLabels = ["8AM", "10AM", "12PM", "2PM", "4PM", "6PM"];
-    const temperatureData = [20, 22, 25, 26, 24, 22];
+    const timeLabels = ["-.", "-.", "-.", "-.", "recent"];
+    //const temperatureData = [waterTemp[0], waterTemp[1], waterTemp[2], waterTemp[3], waterTemp[4]];
     const ctx = document.getElementById('temperatureChart').getContext('2d');
     const temperatureChart = new Chart(ctx, {
       type: 'line',
@@ -169,7 +169,7 @@
         labels: timeLabels,
         datasets: [{
           label: 'Temperature (°C)',
-          data: temperatureData,
+          data: [<%= waterTemp[0] %>, <%= waterTemp[1] %>, <%= waterTemp[2] %>, <%= waterTemp[3] %>, <%= waterTemp[4] %>],
           borderColor: 'rgb(75, 192, 192)',
           backgroundColor: 'rgba(75, 192, 192, 0.2)',
           borderWidth: 2,

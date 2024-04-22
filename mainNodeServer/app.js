@@ -2,7 +2,7 @@ const WebSocket = require('ws');
 const fs = require("fs");
 const express = require('express');
 
-const espAquarium = "192.168.10.x"
+const espAquarium = "192.168.10.164";
 
 let waterTemp = [];
 loadDataFiles();
@@ -28,6 +28,8 @@ wss.on('connection', function connection(ws, req) {
     if (deviceIp === espAquarium){
       console.log("Message received: ESP_Aquarium\nMessage: ", parsedMessage, "\n");
       savewaterTemp(parsedMessage);
+    } else {
+      console.log(`Device IP: ${deviceIp}\nMessage received: Uknow device\nMessage: ${parsedMessage} \n`);
     }
   });
 
@@ -35,12 +37,10 @@ wss.on('connection', function connection(ws, req) {
     console.log('Client disconnected');
   });
 });
-
 ////////////////////
 
 
 //    HANDLERS AND OTHER FUNCTIONS
-
 function loadDataFiles(){
   //Load the temperature list to the global list
   fs.readFile("data/waterTemp.json", (error, data) => {
@@ -64,7 +64,12 @@ function parseMessage(message){
 
 function savewaterTemp(push){
   //Push the value to the current list and log it.
-  waterTemp.push(push);
+  if (waterTemp.length > 4){
+    waterTemp.push(push);
+    waterTemp.shift();
+  } else {
+    waterTemp.push(push);
+  }
 
   fs.writeFile("data/waterTemp.json", JSON.stringify(waterTemp), (error) => {
     if (error) {
@@ -81,7 +86,7 @@ function extractIPv4(ip) {
     return ip;
   }
 }
-
+//////////////
 
 //WebServer
 const webServer = express();
@@ -89,7 +94,7 @@ webServer.set('view engine', 'ejs');
 
 webServer.get('/', (req, res) => {
     const value = 'Hello from Node.js server!';
-    res.render('index', { wTempVal: 0 });
+    res.render('index', { waterTemp: waterTemp });
 });
 
 webServer.listen(80, () => {

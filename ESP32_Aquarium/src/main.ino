@@ -7,9 +7,9 @@
 #define HEAT_PIN 17 
 
 const char* ssid = "TP-3009";
-const char* password = "x";
+const char* password = "30092016vm";
 
-const char* wsServer = "192.168.10.x"; 
+const char* wsServer = "192.168.10.246"; 
 const uint16_t wsPort = 8080; 
 
 using namespace websockets;
@@ -65,7 +65,7 @@ void loop(){
   } else {
     wsConnect();
   }
-  delay(2000);
+  delay(900000);
 }
 
 void inMessageHandler(String message){
