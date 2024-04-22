@@ -157,7 +157,7 @@
 </div>
 
   <script>
-    const timeLabels = ["-.", "-.", "-.", "-.", "recent"];
+    const timeLabels = [<%= waterTemp[0].time %>, <%= waterTemp[1].time %>, <%= waterTemp[2].time %>, <%= waterTemp[3].time %>, <%= waterTemp[4].time %>];
     const ctx = document.getElementById('temperatureChart').getContext('2d');
     const temperatureChart = new Chart(ctx, {
       type: 'line',
@@ -165,7 +165,7 @@
         labels: timeLabels,
         datasets: [{
           label: 'Water Temp (Cº)',
-          data: [<%= waterTemp[0] %>, <%= waterTemp[1] %>, <%= waterTemp[2] %>, <%= waterTemp[3] %>, <%= waterTemp[4] %>],
+          data: [<%= waterTemp[0].temp %>, <%= waterTemp[1].temp %>, <%= waterTemp[2].temp %>, <%= waterTemp[3].temp %>, <%= waterTemp[4].temp %>],
           borderColor: 'rgb(75, 192, 192)',
           backgroundColor: 'rgba(75, 192, 192, 0.2)',
           borderWidth: 2,
