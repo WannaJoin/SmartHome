@@ -10,7 +10,7 @@ loadDataFiles();
 
 //        MAIN WEBSOCKET CODE
 
-const wss = new WebSocket.Server({ host: "127.0.0.1", port: 8080 });
+const wss = new WebSocket.Server({ port: 8080 });
 
 wss.on('listening', () => {
   const address = wss.address();
