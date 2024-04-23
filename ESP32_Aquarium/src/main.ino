@@ -32,11 +32,12 @@ void setup(){
   delay(100);
 
   WiFi.begin(ssid, password);
-
-  // while (WiFi.status() != WL_CONNECTED) {
-  //   delay(1000);
-  //   Serial.println("Connecting to WiFi...");
-  // }
+  Serial.print("Connecting to WiFi.");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.print(".");
+  }
+  Serial.println();
 
   Serial.println("Connected to WiFi");
   Serial.print("IP: ");
