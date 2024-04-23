@@ -51,6 +51,7 @@ void setup(){
 
   pinMode(LIGHT_PIN, OUTPUT);
   pinMode(HEAT_PIN, OUTPUT);
+  delay(3000);
 }
 
 void loop(){
