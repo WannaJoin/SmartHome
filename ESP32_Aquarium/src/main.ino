@@ -9,7 +9,7 @@
 const char* ssid = "TP-3009";
 const char* password = "30092016vm";
 
-const char* wsServer = "192.168.10.246"; 
+const char* wsServer = "192.168.10.109"; 
 const uint16_t wsPort = 8080; 
 
 using namespace websockets;
