@@ -100,8 +100,11 @@ const webServer = express();
 webServer.set('view engine', 'ejs');
 
 webServer.get('/', (req, res) => {
-    const value = 'Hello from Node.js server!';
-    res.render('index', { waterTemp: waterTemp });
+    res.render('hub');
+});
+
+webServer.get('/aquarium', (req, res) => {
+  res.render('aquarium', { waterTemp: waterTemp });
 });
 
 webServer.listen(80, () => {

@@ -34,15 +34,15 @@
 
 </body>
 <script>
-    <!--var waterTemp = <%-JSON.stringify(waterTemp)%>;-->
+    var waterTemp = <%-JSON.stringify(waterTemp)%>;
     const ctx = document.getElementById('temperatureChart').getContext('2d');
     const temperatureChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: [10,12,14,16],
+        labels: [waterTemp[0].time, waterTemp[1].time, waterTemp[2].time, waterTemp[3].time, waterTemp[4].time],
         datasets: [{
           label: 'Temp. Água (Cº)',
-          data: [10,12,8,18],
+          data: [waterTemp[0].temp, waterTemp[1].temp, waterTemp[2].temp, waterTemp[3].temp, waterTemp[4].temp],
           borderColor: '#3F00FF',
           backgroundColor: 'rgba(75, 192, 192, 0.1)',
           borderWidth: 2,
