@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://kit.fontawesome.com/d7b3791779.js" crossorigin="anonymous"></script>    
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>RGB Remote</title>
+  <style>
+    body{
+        background-color: #fbf7e9 ;
+    }
+  </style>
+</head>
+<body>
+
+<div style="width: 700px; height: 475px;">
+  <canvas id="temperatureChart" width="100" height="100"></canvas>
+</div>
+
+  <script>
+    var waterTemp = <%-JSON.stringify(waterTemp)%>;
+    const ctx = document.getElementById('temperatureChart').getContext('2d');
+    const temperatureChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [waterTemp[0].time, waterTemp[1].time, waterTemp[2].time, waterTemp[3].time, waterTemp[4].time],
+        datasets: [{
+          label: 'Water Temp (Cº)',
+          data: [waterTemp[0].temp, waterTemp[1].temp, waterTemp[2].temp, waterTemp[3].temp, waterTemp[4].temp],
+          borderColor: 'rgb(75, 192, 192)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderWidth: 2,
+          pointRadius: 5,
+          pointBackgroundColor: 'rgb(75, 192, 192)',
+          pointBorderColor: 'rgba(75, 192, 192, 0.2)',
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Temperature (°C)'
+            }
+          }],
+          xAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Time'
+            }
+          }]
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
