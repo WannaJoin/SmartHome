@@ -97,6 +97,7 @@ function extractIPv4(ip) {
 
 //WebServer
 const webServer = express();
+webServer.use(express.static('public'));
 webServer.set('view engine', 'ejs');
 
 webServer.get('/', (req, res) => {
