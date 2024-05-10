@@ -66,9 +66,12 @@ function aquariumSave(push){
   const currentTime = new Date();
   
   let parsedTime = `${currentTime.getHours()}:${currentTime.getMinutes()}h`;
+  
   push = {
     time: parsedTime,
-    temp: push
+    waterTemp: push.waterTemp,
+    airTemp: push.airTemp,
+    humidity: push.humidity
   };
   
   if (aquariumValues.length > 4){
