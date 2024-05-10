@@ -4,7 +4,7 @@ const express = require('express');
 
 const espAquarium = "192.168.10.164";
 
-let waterTemp = [];
+let aquariumValues = [];
 loadDataFiles();
 
 
@@ -27,7 +27,7 @@ wss.on('connection', function connection(ws, req) {
     let parsedMessage = parseMessage(message);
     if (deviceIp === espAquarium){
       console.log("Message received: ESP_Aquarium\nMessage: ", parsedMessage, "\n");
-      savewaterTemp(parsedMessage);
+      aquariumSave(parsedMessage);
     } else {
       console.log(`Device IP: ${deviceIp}\nMessage received: Uknow device\nMessage: ${parsedMessage} \n`);
     }
@@ -43,9 +43,9 @@ wss.on('connection', function connection(ws, req) {
 //    HANDLERS AND OTHER FUNCTIONS
 function loadDataFiles(){
   //Load the temperature list to the global list
-  fs.readFile("data/waterTemp.json", (error, data) => {
+  fs.readFile("data/espAquarium.json", (error, data) => {
     if (data != 0){
-      waterTemp = JSON.parse(data);
+      aquariumValues = JSON.parse(data);
     }
   });
 }
@@ -62,7 +62,7 @@ function parseMessage(message){
   return parsedMessage;
 }
 
-function savewaterTemp(push){
+function aquariumSave(push){
   const currentTime = new Date();
   
   let parsedTime = `${currentTime.getHours()}:${currentTime.getMinutes()}h`;
@@ -71,14 +71,14 @@ function savewaterTemp(push){
     temp: push
   };
   
-  if (waterTemp.length > 4){
-    waterTemp.push(push);
-    waterTemp.shift();
+  if (aquariumValues.length > 4){
+    aquariumValues.push(push);
+    aquariumValues.shift();
   } else {
-    waterTemp.push(push);
+    aquariumValues.push(push);
   }
 
-  fs.writeFile("data/waterTemp.json", JSON.stringify(waterTemp), (error) => {
+  fs.writeFile("data/espAquarium.json", JSON.stringify(aquariumValues), (error) => {
     if (error) {
       console.error(error);
       throw error;
@@ -93,7 +93,7 @@ function extractIPv4(ip) {
     return ip;
   }
 }
-//////////////
+///////////////////////////////////
 
 //WebServer
 const webServer = express();
@@ -105,7 +105,7 @@ webServer.get('/', (req, res) => {
 });
 
 webServer.get('/aquarium', (req, res) => {
-  res.render('aquarium', { waterTemp: waterTemp });
+  res.render('aquarium', { aquariumValues: aquariumValues });
 });
 
 webServer.listen(80, () => {
