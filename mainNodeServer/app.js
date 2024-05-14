@@ -2,8 +2,8 @@ const WebSocket = require('ws');
 const fs = require("fs");
 const express = require('express');
 
-const espAquarium = "192.168.10.164";
-
+//const espAquarium = "192.168.10.164";
+const espAquarium = "192.168.10.186";
 let aquariumValues = [];
 loadDataFiles();
 

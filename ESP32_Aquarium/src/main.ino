@@ -11,7 +11,7 @@
 const char* ssid = "TP-3009";
 const char* password = "30092016vm";
 
-const char* wsServer = "192.168.10.109"; 
+const char* wsServer = "192.168.10.214"; 
 const uint16_t wsPort = 8080; 
 
 using namespace websockets;
@@ -75,12 +75,16 @@ void loop(){
     wsConnect();
   }
 
-  delay(900000);
+  delay(5000);
 }
 
 String parsedData(){
   waterSensor.requestTemperatures();
   delay(dht.getMinimumSamplingPeriod());
+  
+  delay(20000);
+  dht.getHumidity();
+  dht.getTemperature();
 
   JsonDocument sensorsData;
   sensorsData["waterTemp"] = waterSensor.getTempCByIndex(0);
