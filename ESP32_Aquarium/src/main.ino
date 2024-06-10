@@ -6,6 +6,8 @@
 #include <DHTesp.h>
 #include <ESP32Time.h>
 
+using namespace websockets;
+
 #define LIGHT_PIN 16
 #define HEAT_PIN 17 
 #define BUTTON_PIN 21
@@ -17,8 +19,6 @@ const char* password = "30092016vm";
 
 const char* wsServer = "192.168.10.214"; 
 const uint16_t wsPort = 8080; 
-
-using namespace websockets;
 WebsocketsClient wsClient;
 
 //Sensors
@@ -32,7 +32,7 @@ bool wsConnected;
 bool lightState = false;
 TaskHandle_t ButtonTask;
 TaskHandle_t ClockTask;
-ESP32Time rtc(0);
+ESP32Time rtc(-3600);
 
 String parsedData(){
   waterSensor.requestTemperatures();
@@ -94,7 +94,6 @@ void checkHour(void *parameter){
     vTaskDelay(15000 / portTICK_PERIOD_MS);
   }
 }
-
 
 void setup(){
   xTaskCreate(checkButton, "checkButton", 10000, NULL, 1, &ButtonTask);
