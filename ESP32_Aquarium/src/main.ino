@@ -9,7 +9,6 @@
 using namespace websockets;
 
 #define LIGHT_PIN 16
-#define HEAT_PIN 17 
 #define BUTTON_PIN 21
 #define DHT_PIN 16
 #define DHT_TYPE DHT11
@@ -103,41 +102,40 @@ void setup(){
   delay(100);
 
   pinMode(LIGHT_PIN, OUTPUT);
-  pinMode(HEAT_PIN, OUTPUT);
   dht.setup(DHT_PIN, DHTesp::DHT11);
   
-  // WiFi.begin(ssid, password);
-  // Serial.print("Connecting to WiFi.");
-  // while (WiFi.status() != WL_CONNECTED) {
-  //   delay(1000);
-  //   Serial.print(".");
-  // }
+  WiFi.begin(ssid, password);
+  Serial.print("Connecting to WiFi.");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.print(".");
+  }
   Serial.println();
 
   Serial.println("Connected to WiFi");
   Serial.print("IP: ");
   Serial. println(WiFi. localIP());
   
-  // wsConnect();
-  // wsClient.onMessage([&](WebsocketsMessage message) {
-  //     Serial.print("Got Message: ");
-  //     Serial.println(message.data());
-  //     inMessageHandler(message.data());
-  //   }
-  // );
+  wsConnect();
+  wsClient.onMessage([&](WebsocketsMessage message) {
+      Serial.print("Got Message: ");
+      Serial.println(message.data());
+      inMessageHandler(message.data());
+    }
+  );
   delay(3000);
 }
 
 void loop(){  
-  //Serial.println("Serial: ");
-  //Serial.println(parsedData());
+  Serial.println("Serial: ");
+  Serial.println(parsedData());
 
-  // if(wsClient.available()) {
-  //   wsClient.poll();
-  //   wsClient.send(parsedData());
-  // } else {
-  //   wsConnect();
-  // }
+  if(wsClient.available()) {
+    wsClient.poll();
+    wsClient.send(parsedData());
+  } else {
+    wsConnect();
+  }
 
   if (lightState){
     digitalWrite(LIGHT_PIN, HIGH);
